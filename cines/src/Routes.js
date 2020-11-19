@@ -2,6 +2,8 @@ import React from 'react';
 import { Route, Switch, Redirect } from "react-router-dom";
 import Home from './Home';
 import NavBar from './NavBar';
+import MovieList from './MovieList';
+import MovieDetails from './MovieDetails';
 
 
 class Routes extends React.PureComponent {
@@ -14,7 +16,9 @@ class Routes extends React.PureComponent {
         <div className="container-fluid">
           <Switch>
             <Route exact path="/" render={() => <Home />} />
-            
+            <Route exact path="/movies/search" render={() => <MovieList />} />
+            <Route exact path="/movies/:movie" render={() => <MovieDetails />} />
+
             <Redirect to="/" />
           </Switch>
         </div>
