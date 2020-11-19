@@ -1,18 +1,19 @@
 const db = require("../db");
 
-/** Related functions for movies. */
+// Related functions for movies.
 
 class Movie {
-  /** Given a movie name, check if it already exists in the database. */
+  // Given a movie id, check if it already exists in the database.
 
-  static async findMovie(movieid) {
+  static async findMovie(movieId) {
     const movieRes = await db.query(
       `SELECT imdbid, movie_title, thumbs_up, thumbs_down
             FROM movies
             WHERE imdbid = $1`,
-      [movieid]);
+      [movieId]);
 
     const movie = movieRes.rows;
+    console.log('movie', movie)
 
     if (!movie) {
       const error = new Error(`There exists no movie '${name}'`);
@@ -23,13 +24,28 @@ class Movie {
     return movie;
   }
 
-  static async addMovie(movieid, movieTitle, thumb) {
+  // Add a movie to database and initialize votes
+
+  static async addMovie(data) {
+    let duplicateCheck = await db.query(
+      `SELECT imdbid, movie_title, thumbs_up, thumbs_down
+            FROM movies
+            WHERE imdbid = $1`,
+      [data.movieId]);
+
+    if (duplicateCheck.rows[0]) {
+      const err = new Error(
+        `There already exists a movie with ID ${data.movieId}`);
+      err.status = 409;
+      throw err;
+    }
+
     let thumbsUp = 0;
     let thumbsDown = 0;
 
-    if (thumb === 'up') {
+    if (data.thumb === 'up') {
       thumbsUp = 1;
-    } else {
+    } else if (data.thumb === 'down') {
       thumbsDown = 1;
     }
 
@@ -39,8 +55,8 @@ class Movie {
             VALUES ($1, $2, $3, $4)
             RETURNING imdbid, movie_title, thumbs_up, thumbs_down`,
       [
-        movieid,
-        movieTitle,
+        data.movieId,
+        data.movieTitle,
         thumbsUp,
         thumbsDown
       ]);
@@ -48,26 +64,30 @@ class Movie {
     return movieRes.rows[0];
   }
 
-  static async updateThumbs(movieid, thumb) {
+  // Update votes for an existing movie in database
+
+  static async updateThumbs(data) {
     let movieRes;
 
-    if (thumb === 'up') {
+    if (data.thumb === 'up') {
       movieRes = await db.query(
         `UPDATE movies
         SET thumbs_up = thumbs_up + 1
-        WHERE imdbid = ${movieid}`
+        WHERE imdbid = ${data.movieId}
+        RETURNING imdbid, movie_title, thumbs_up, thumbs_down`
       );
-    } else {
+    } else if (data.thumb === 'down') {
       movieRes = await db.query(
         `UPDATE movies
         SET thumbs_down = thumbs_down + 1
-        WHERE imdbid = ${movieid}`
+        WHERE imdbid = ${data.movieId}
+        RETURNING imdbid, movie_title, thumbs_up, thumbs_down`
       );
     }
 
     if (!movieRes.rows) {
       const error = new Error(`Can't update thumbs. 
-      There exists no movie '${name}'`);
+      There exists no movie '${data.movieTitle}'`);
       error.status = 404;
       throw error;
     }
