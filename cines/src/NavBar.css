@@ -11,8 +11,8 @@
     border-bottom: 1px solid #DFDFDF;
 }
 .navbar-brand:active {
-    color: #537ECC;
-    border-bottom: 1px solid #537ECC;
+    color: #FA7777;
+    border-bottom: 1px solid #FA7777;
 }
 .nav-link {
     color: #DFDFDF;
@@ -23,6 +23,6 @@
     border-bottom: 1px solid #DFDFDF;
 }
 .nav-link:active {
-    color: #537ECC;
-    border-bottom: 1px solid #537ECC;
+    color: #FA7777;
+    border-bottom: 1px solid #FA7777;
 }
