@@ -24,49 +24,24 @@ class CinesApi {
     }
   }
 
-  static async getCompany(handle) {
-    let res = await this.request(`companies/${handle}`);
-    return res.company;
-  }
-
-  static async searchCompanies(query) {
-    let res;
-    if (query) {
-      res = await this.request(`companies`, { search: query });
-    } else {
-      res = await this.request(`companies`);
-    }
-    return res.companies;
-  }
-
-  static async searchJobs(query) {
-    let res;
-    if (query) {
-      res = await this.request(`jobs`, { search: query });
-    } else {
-      res = await this.request(`jobs`);
-    }
-    return res.jobs;
-  }
-
-  static async login(username, password) {
-    let res = await this.request(`login`, { username, password }, "post");
+  static async getMovie(title) {
+    let res = await this.request(`movies/${title}`);
     return res;
   }
 
-  static async register(username, password, first_name, last_name, email) {
-    let res = await this.request('users', { username, password, first_name, last_name, email }, "post");
+  static async searchMovies(query) {
+    let res = await this.request(`movies/search`, { search: query });
     return res;
   }
 
-
-  static async editUser(username, password, first_name, last_name, photo_url, email) {
-    let res = await this.request(`users/${username}`, { password, first_name, last_name, photo_url, email }, "patch")
+  static async initialVote(movie, vote) {
+    let res = await this.request(`movies/${movie}/vote`, { thumb: vote }, 'post');
     return res;
   }
 
-  static async applyToJob(id, state) {
-    await this.request(`jobs/${id}/apply`, { state }, 'post')
+  static async vote(movie, vote) {
+    let res = await this.request(`movies/${movie}/vote`, { thumb: vote }, 'patch');
+    return res;
   }
 }
 
