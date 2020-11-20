@@ -5,9 +5,7 @@ import NavBar from './NavBar';
 import MovieList from './MovieList';
 import MovieDetails from './MovieDetails';
 
-
 class Routes extends React.PureComponent {
-
   render() {
     return (
       <div>
@@ -17,8 +15,7 @@ class Routes extends React.PureComponent {
           <Switch>
             <Route exact path="/" render={() => <Home />} />
             <Route exact path="/movies/search" render={() => <MovieList />} />
-            <Route exact path="/movies/:movie" render={() => <MovieDetails />} />
-
+            <Route exact path="/movies/:movie" render={rtProps => <MovieDetails {...rtProps} />} />
             <Redirect to="/" />
           </Switch>
         </div>
