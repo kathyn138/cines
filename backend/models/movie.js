@@ -13,7 +13,6 @@ class Movie {
       [movieId]);
 
     const movie = movieRes.rows;
-    console.log('movie', movie)
 
     if (!movie) {
       const error = new Error(`There exists no movie '${name}'`);
@@ -73,16 +72,16 @@ class Movie {
       movieRes = await db.query(
         `UPDATE movies
         SET thumbs_up = thumbs_up + 1
-        WHERE imdbid = ${data.movieId}
-        RETURNING imdbid, movie_title, thumbs_up, thumbs_down`
-      );
+        WHERE imdbid = $1
+        RETURNING imdbid, movie_title, thumbs_up, thumbs_down`,
+        [data.movieId]);
     } else if (data.thumb === 'down') {
       movieRes = await db.query(
         `UPDATE movies
         SET thumbs_down = thumbs_down + 1
-        WHERE imdbid = ${data.movieId}
-        RETURNING imdbid, movie_title, thumbs_up, thumbs_down`
-      );
+        WHERE imdbid = $1
+        RETURNING imdbid, movie_title, thumbs_up, thumbs_down`,
+        [data.movieId]);
     }
 
     if (!movieRes.rows) {
@@ -94,7 +93,6 @@ class Movie {
 
     return movieRes.rows[0];
   }
-
 }
 
 
