@@ -1,0 +1,15 @@
+.movie-list-body {
+    margin-top: 50px;
+    width: 18rem;
+    border: none;
+    background-color: transparent;
+}
+ul {
+    list-style-type: none;
+}
+.movie-list-group {
+    display: flex;
+    flex-direction: column; 
+    padding-left: 0;
+    margin-bottom: 0;
+}
