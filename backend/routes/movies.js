@@ -14,7 +14,14 @@ const apiKey = 'd2cab6'
 router.get("/search/:search", async function (req, res, next) {
   try {
     const movies = await axios.get(`http://www.omdbapi.com/?apikey=${apiKey}&s=${req.params.search}`);
-    return res.json(movies.data.Search)
+    // sort movies with most recent release year first
+    let sortedMovies = movies.data.Search.sort((a, b) => b.Year - a.Year);
+    // convert keys into lowercase for consistency
+    let movieData = sortedMovies.map(m => Object.keys(m).reduce((acc, key) => {
+      acc[key.toLowerCase()] = m[key];
+      return acc;
+    }, {}));
+    return res.json(movieData)
   } catch (err) {
     return next(err);
   }
@@ -29,7 +36,11 @@ router.get("/:id", async function (req, res, next) {
     const movieFromApi = await axios.get(`http://www.omdbapi.com/?apikey=${apiKey}&i=${req.params.id}`);
     const movieFromDb = await Movie.findMovie(req.params.id);
 
-    let movieData = movieFromApi.data;
+    // convert keys into lowercase for consistency
+    let movieData = Object.keys(movieFromApi.data).reduce((acc, key) => {
+      acc[key.toLowerCase()] = movieFromApi.data[key];
+      return acc;
+    }, {});
 
     if (movieFromDb.length === 0) {
       movieData['thumbsUp'] = 0;
