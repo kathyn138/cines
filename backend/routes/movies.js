@@ -61,8 +61,13 @@ router.get("/:id", async function (req, res, next) {
 router.post("/:id/vote", async function (req, res, next) {
   try {
     let movie = await Movie.addMovie(req.body);
+    let movieData = {};
+    
+    movieData['title'] = movie.movie_title;
+    movieData['thumbsUp'] = movie.thumbs_up;
+    movieData['thumbsDown'] = movie.thumbs_down;
 
-    return res.json({ movie });
+    return res.json(movieData);
   } catch (err) {
     return next(err);
   }
@@ -73,8 +78,13 @@ router.post("/:id/vote", async function (req, res, next) {
 router.patch("/:id/vote", async function (req, res, next) {
   try {
     let movie = await Movie.updateThumbs(req.body);
+    let movieData = {};
+    
+    movieData['title'] = movie.movie_title;
+    movieData['thumbsUp'] = movie.thumbs_up;
+    movieData['thumbsDown'] = movie.thumbs_down;
 
-    return res.json(movie);
+    return res.json(movieData);
   } catch (err) {
     return next(err);
   }
