@@ -25,10 +25,10 @@ SET default_table_access_method = heap;
 --
 
 CREATE TABLE public.movies (
-    imdbid integer NOT NULL,
+    imdbid text NOT NULL,
     movie_title text,
-    thumbs_up text,
-    thumbs_down text
+    thumbs_up integer,
+    thumbs_down integer
 );
 
 
@@ -68,6 +68,9 @@ ALTER TABLE ONLY public.movies ALTER COLUMN imdbid SET DEFAULT nextval('public.m
 --
 
 COPY public.movies (imdbid, movie_title, thumbs_up, thumbs_down) FROM stdin;
+tt2233044	The Amazing Spiderman T4 Premiere Special	8	1
+tt2586634	Amazing Spiderman Syndrome	5	2
+tt2705436	Italian Spiderman	1	0
 \.
 
 
