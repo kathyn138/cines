@@ -1,6 +1,6 @@
 const db = require("../db");
 
-// Related functions for movies.
+// Related functions for movies in database.
 
 class Movie {
   // Given a movie id, check if it already exists in the database.
