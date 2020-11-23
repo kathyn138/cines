@@ -6,14 +6,15 @@ const axios = require('axios');
 const Movie = require("../models/movie");
 
 // Replace apiKey with environment variable
-const apiKey = 'd2cab6'
+const apiKey = 'd2cab6';
 
-// Route for movie searching
-// Returns array of movie objects
+// Route for movie searching ?search=spiderman
+// ?search=movie  =>  [{movie}]
+// Returns array of search result movie objects
 
-router.get("/search/:search", async function (req, res, next) {
+router.get("/", async function (req, res, next) {
   try {
-    const movies = await axios.get(`http://www.omdbapi.com/?apikey=${apiKey}&s=${req.params.search}`);
+    const movies = await axios.get(`http://www.omdbapi.com/?apikey=${apiKey}&s=${req.query.search}`);
     // sort movies with most recent release year first
     let sortedMovies = movies.data.Search.sort((a, b) => b.Year - a.Year);
     // convert keys into lowercase for consistency
@@ -62,7 +63,7 @@ router.post("/:id/vote", async function (req, res, next) {
   try {
     let movie = await Movie.addMovie(req.body);
     let movieData = {};
-    
+
     movieData['title'] = movie.movie_title;
     movieData['thumbsUp'] = movie.thumbs_up;
     movieData['thumbsDown'] = movie.thumbs_down;
@@ -79,7 +80,7 @@ router.patch("/:id/vote", async function (req, res, next) {
   try {
     let movie = await Movie.updateThumbs(req.body);
     let movieData = {};
-    
+
     movieData['title'] = movie.movie_title;
     movieData['thumbsUp'] = movie.thumbs_up;
     movieData['thumbsDown'] = movie.thumbs_down;
