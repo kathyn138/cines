@@ -27,12 +27,15 @@ class MovieDetails extends React.Component {
   }
 
   render() {
-    let { director, plot, poster, title, thumbsDown, thumbsUp, year } = this.state;
+    let { director, plot, poster, title, thumbsDown,
+      thumbsUp, year } = this.state;
 
-    let posterSource = poster ? <img src={poster} alt="movie poster"></img>
+    let posterSource = poster ? <img src={poster}
+      alt="movie poster"></img>
       : `This movie doesn't have a poster :(`;
 
-    let directorLabel = director.split(',').length > 1 ? 'Directors' : 'Director';
+    let directorLabel = director.split(',').length > 1 ?
+      'Directors' : 'Director';
 
     return (
       <div className="row justify-content-center">
@@ -43,10 +46,12 @@ class MovieDetails extends React.Component {
           <p>{directorLabel}: {director}</p>
           <p>
             <span className="thumbs-up">
-              <i className="fas fa-thumbs-up" onClick={() => this.handleVote('up')}></i> {thumbsUp}
+              <i className="fas fa-thumbs-up" onClick={() =>
+                this.handleVote('up')}></i> {thumbsUp}
             </span>
             <span className="thumbs-down">
-              <i className="fas fa-thumbs-down" onClick={() => this.handleVote('down')}></i> {thumbsDown}
+              <i className="fas fa-thumbs-down" onClick={() =>
+                this.handleVote('down')}></i> {thumbsDown}
             </span>
           </p>
           <p>Description: {plot}</p>
