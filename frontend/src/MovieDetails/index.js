@@ -30,9 +30,8 @@ class MovieDetails extends React.Component {
     let { director, plot, poster, title, thumbsDown,
       thumbsUp, year } = this.state;
 
-    let posterSource = poster ? <img src={poster}
-      alt="movie poster"></img>
-      : `This movie doesn't have a poster :(`;
+    let posterSource = poster === "N/A" ? `This movie doesn't 
+    have a poster :(` : <img src={poster} alt="Movie Poster"></img>;
 
     let directorLabel = director.split(',').length > 1 ?
       'Directors' : 'Director';
