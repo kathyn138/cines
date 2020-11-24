@@ -2,11 +2,9 @@
 
 const express = require("express");
 const router = new express.Router();
-const axios = require('axios');
+const axios = require("axios");
 const Movie = require("../models/movie");
-
-// Replace apiKey with environment variable
-const apiKey = 'd2cab6';
+const { API_KEY } = require("../config");
 
 // Route for movie searching ?search=spiderman
 // ?search=movie  =>  [{movie}]
@@ -14,7 +12,7 @@ const apiKey = 'd2cab6';
 
 router.get("/", async function (req, res, next) {
   try {
-    const movies = await axios.get(`http://www.omdbapi.com/?apikey=${apiKey}&s=${req.query.search}`);
+    const movies = await axios.get(`http://www.omdbapi.com/?apikey=${API_KEY}&s=${req.query.search}`);
     // sort movies with most recent release year first
     let sortedMovies = movies.data.Search.sort((a, b) => b.Year - a.Year);
     // convert keys into lowercase for consistency
@@ -34,7 +32,7 @@ router.get("/", async function (req, res, next) {
 
 router.get("/:id", async function (req, res, next) {
   try {
-    const movieFromApi = await axios.get(`http://www.omdbapi.com/?apikey=${apiKey}&i=${req.params.id}`);
+    const movieFromApi = await axios.get(`http://www.omdbapi.com/?apikey=${API_KEY}&i=${req.params.id}`);
     const movieFromDb = await Movie.findMovie(req.params.id);
 
     // convert keys into lowercase for consistency
