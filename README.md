@@ -10,3 +10,52 @@ I used [OMDb API](http://www.omdbapi.com/) to obtain movie data. The design and 
 
 ## Table of Contents
 
+- [Installation](https://github.com/kathyn262/cines#installation)
+- [Technologies](https://github.com/kathyn262/cines#technologies)
+- [Component Hierarchy](https://github.com/kathyn262/cines#component-hierarchy)
+ 
+## Installation
+To load data from SQL file into a database: 
+```
+cd backend
+createdb cines
+psql cines < data.sql
+```
+
+Use npm to install dependencies and start servers for the frontend and backend. 
+
+Backend Setup: 
+```
+cd backend
+npm install
+npm start
+```
+
+Frontend Setup: 
+```
+cd frontend
+npm install 
+npm start
+```
+
+## Technologies 
+- React
+- Create-React-App
+- HTML/CSS
+- Bootstrap
+- Axios
+- Express
+- PostgreSQL
+
+## Component Hierarchy
+
+```
+App
+└─┬ Routes
+  ├── Home
+  ├── MovieDetails
+  ├─┬ MovieList
+  │ ├── MovieCard
+  │ └── SearchBar
+  └── NavBar  
+```
