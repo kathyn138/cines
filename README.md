@@ -25,6 +25,12 @@ cd backend
 createdb cines
 psql cines < data.sql
 ```
+To set up API Key in backend: 
+```
+cd backend
+touch .env
+```
+Paste `API_KEY=YOUR_KEY_HERE` into the `.env` file with the API key in place of `YOUR_KEY_HERE`
 
 Use npm to install dependencies and start servers for the frontend and backend. 
 
